@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+body{
+  background-color: rgb(36, 59, 192);
+}
+h2{
+  text-align: center;
+  color: white;
+}
+form{
+  text-align: center;
+  color: white;
+}
+button{
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+<body>
+
+<script>
+  function getVPCs(){
+    let selectedVPCs = "";
+    const VPCs = ['VPC001','VPC002','VPC003','VPC004','VPC005','VPC006'];
+    for (let x of VPCs){
+      if (document.getElementById(x).checked){
+        selectedVPCs += x + ",";
+      }
+      else{ 
+    }
+    }
+    selectedVPCs = selectedVPCs.substring(0, selectedVPCs.length -1)
+    if (selectedVPCs != ''){
+      document.getElementById("response").innerHTML = "A request has been made to reset the following machines: "+ selectedVPCs;
+
+      const url = 'https://aap./api/v2/workflow_job_templates/5/launch/';
+      const options = {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json','Authentication':'Bearer' + },
+        body: '{"limit":{"survey_var":7}}'
+      };
+
+      try {
+        const response = await fetch(url, options);
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    else{
+      document.getElementById("response").innerHTML = "No machines selectedVPCs to be reset";
+    }
+  }
+</script>
+    
+<h2>VPC Rebuilds</h2>
+
+<form>
+  <input type="checkbox" id="VPC001" name="VPC" value="VPC001">
+  <label for="VPC001">VPC001</label><br>
+  <input type="checkbox" id="VPC002" name="VPC" value="VPC002">
+  <label for="VPC002">VPC002</label><br>
+  <input type="checkbox" id="VPC003" name="VPC" value="VPC003">
+  <label for="VPC003">VPC003</label><br>
+  <input type="checkbox" id="VPC004" name="VPC" value="VPC004">
+  <label for="VPC004">VPC004</label><br>
+  <input type="checkbox" id="VPC005" name="VPC" value="VPC005">
+  <label for="VPC005">VPC005</label><br>
+  <input type="checkbox" id="VPC006" name="VPC" value="VPC006">
+  <label for="VPC006">VPC006</label>
+
+</form> 
+<button onclick="getVPCs()"> Click to rebuild </button>
+
+
+<p id="response"></p>
+
+</body>
+</html>
+
